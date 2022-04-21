@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Photobooth gallery</title>
+        <link href="/js/lg/css/lightgallery-bundle.min.css" rel="stylesheet">
+          <style>
+            body {
+              background-color: black;
+            }
+        </style>
+        <script src="js/jquery.min.js"></script>
+    </head>
+    <body class="home">
+
+      <div id="lightgallery">
+      </div>
+      <script src="js/picturefill.min.js"></script>
+      <script src="js/lg/lightgallery.min.js"></script>
+      <script src="js/lg/plugins/thumbnail/lg-thumbnail.min.js"></script>
+      <script src="js/lg/plugins/fullscreen/lg-fullscreen.min.js"></script>
+      <script src="js/lg/plugins/zoom/lg-zoom.min.js"></script>
+      <script src="js/lg/plugins/autoplay/lg-autoplay.min.js"></script>
+      <script type="text/javascript">
+        var firstLoad = true;
+        const $lgContainer = document.getElementById("lightgallery");   
+        var galleryData = {
+          slideDelay: 400,
+          slideShowAutoplay: true,
+          plugins: [lgThumbnail, lgFullscreen, lgZoom, lgAutoplay],
+          closable: false,
+          dynamic: true,
+          dynamicEl: [],
+        };
+        var dynamicGallery = null;
+      $(document).ready(function(){
+        var evtSource = new EventSource('gallery');
+        evtSource.onmessage = function(e) {
+          const parsedData = JSON.parse(e.data);
+          if(firstLoad){
+            firstLoad = false;
+            galleryData.dynamicEl = parsedData;
+            dynamicGallery = window.lightGallery($lgContainer, galleryData);
+            dynamicGallery.openGallery();
+          }else{            
+            dynamicGallery.refresh(parsedData);
+          }
+        }
+      });
+      </script>
+
+    </body>
+</html>
