@@ -29,7 +29,7 @@ function addFileToGallery(file) {
   // Do whatever you want to do with the file
   if(isImage(file)) {
     createThumb(file, thumbsPath, 100);
-    createThumb(file, previewPath, 400);
+    createThumb(file, previewPath, 800);
     console.log(file);
     dynamicEl.push({src:'preview/' + file, thumb:'thumbs/' + file, downloadUrl:'photos/' + file});
     clients.forEach(client => client.response.write(`data: ${JSON.stringify(dynamicEl)}\n\n`))
@@ -99,6 +99,11 @@ watcher.on('add', (file, stats) => {
   console.log(`New file : ${file}`);
 
   addFileToGallery(path.basename(file));
+});
+
+//Redirect all other URLs to index
+app.all('*', (req, res) => {
+  res.redirect(301, '/');
 });
 
 app.listen(3001);
