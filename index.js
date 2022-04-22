@@ -3,7 +3,6 @@ const path = require('path');
 const Router = require('router');
 const static = require('serve-static');
 const directoryExists = require('directory-exists').sync;
-const getPayload = require(path.join(__dirname, '/lib/get_payload'));
 const resolveModulePath = require(path.join(__dirname, '/lib/resolve_module_path'));
 const isImage = require(path.join(__dirname, '/lib/is-image'));
 const sharp = require('sharp');
