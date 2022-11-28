@@ -73,6 +73,7 @@ function galleryHandler(request, response, next) {
   });
 }
 
+console.log(`Using ${photoPath} as photo base-path`);
 
 //Initializes gallery images
 galleryInitialLoad();
