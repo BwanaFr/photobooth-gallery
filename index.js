@@ -8,9 +8,8 @@ const isImage = require(path.join(__dirname, '/lib/is-image'));
 const sharp = require('sharp');
 const chokidar = require('chokidar');
 
-//Path wher pictures are stored
-//const photoPath = '/home/pi/Pictures/pibooth'
-const photoPath = '/Users/mdonze/Perso/photobooth-gallery/pictures';
+//Path where pictures are stored
+const photoPath = (process.argv[2] || '/home/pi/Pictures/pibooth'); 
 const thumbsPath = path.join(photoPath, "thumbs");
 const previewPath = path.join(photoPath, "preview");
 
@@ -73,6 +72,7 @@ function galleryHandler(request, response, next) {
     console.log(`${clientId} Connection closed ${clients.length} clients remaining`);
   });
 }
+
 
 //Initializes gallery images
 galleryInitialLoad();
